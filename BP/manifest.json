@@ -1,0 +1,37 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "EssentialCC §r(§a1.0.0§r)",
+    "description": "§aA powerful utility script for Minecraft: Bedrock Edition by providing more tweaks and commands in your game.",
+    "uuid": "1268638c-267b-4e39-b652-e7a75c59ab29",
+    "min_engine_version": [1, 21, 120],
+    "version": [1, 0, 0]
+  },
+  "modules": [
+    {
+      "description": "Behavior Pack Module",
+      "type": "data",
+      "uuid": "12f8c23c-c359-43ce-b74b-0784839ebfb9",
+      "version": [1, 0, 0]
+    },
+    {
+      "description": "scripts",
+      "type": "script",
+      "language": "javascript",
+      "entry": "scripts/index.js",
+      "uuid": "f146d820-5a60-4a10-a1aa-8f779cd5c162",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "beta"
+    }
+  ],
+  "metadata": {
+    "author": ["IndeedItzGab"],
+    "license": "GPL-3.0-or-later",
+    "product_type": "addon"
+  }
+}

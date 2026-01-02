@@ -1,0 +1,8 @@
+import "./list/ban.js"
+import "./list/pardon.js"
+import "./list/lockdimension.js"
+import "./list/unlockdimension.js"
+import "./list/banlist.js"
+import "./list/sethome.js"
+import "./list/home.js"
+import "./list/nickname.js"
