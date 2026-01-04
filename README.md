@@ -6,6 +6,7 @@
 A powerful utility script for Minecraft: Bedrock Edition by providing more tweaks and commands in your game.
 
 ## Documentation
+- [Commands List](https://github.com/IndeedItzGab/EssentialCC/blob/main/docs/COMMANDS.md#available-commands)
 - [Installation Guide](https://github.com/IndeedItzGab/EssentialCC/blob/main/docs/INSTALLATION.md#installation)
 
 ## Contributions
