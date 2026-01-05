@@ -1,11 +1,11 @@
 {
   "format_version": 2,
   "header": {
-    "name": "EssentialCC §r(§a1.0.0§r)",
+    "name": "EssentialCC §r(§a1.0.1§r)",
     "description": "§aA powerful utility script for Minecraft: Bedrock Edition by providing more tweaks and commands in your game.",
     "uuid": "1268638c-267b-4e39-b652-e7a75c59ab29",
     "min_engine_version": [1, 21, 120],
-    "version": [1, 0, 0]
+    "version": [1, 0, 1]
   },
   "modules": [
     {

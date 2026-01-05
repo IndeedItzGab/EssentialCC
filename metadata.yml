@@ -1,10 +1,16 @@
 name: EssentialCC
-version: V1.0.0
+version: V1.0.1
 status: STABLE
 message: |
-  # EssentialCC V1.0.0
-  - Allow operators to lock and unlock dimension through slash commands with `/lockdimension` and `/unlockdimension`.
-  - Allow players to set their home location and teleport at it with `/sethome` and `/home`
-  - Allow operators to set nickname to any players with `/nickname`
-  - Allow operators to ban and unban players through slash commands with `/ban`, `/pardon`, and `/banlist`
-  - You can disable/enable a certain slash commands through the configuration file.
+  # EssentialCC V1.0.1
+  - Added more slash commands:
+    - `/warp`
+    - `/delwarp`
+    - `/setwarp`
+    - `/warplist`
+    - `/kickall`
+    - `/mute`
+    - `/realname`
+    - `/unmute`
+    - `/suicide`
+  - Fixed an issue with movement detector during teleportation

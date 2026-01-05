@@ -10,7 +10,21 @@ export const config = {
       unlockdimension: true,
       nickname: true,
       sethome: false,
-      home: true
+      home: true,
+      mute: true,
+      unmute: true,
+      kickall: true,
+      realname: true,
+      suicide: true,
+      setwarp: true,
+      warp: true,
+      delwarp: true,
+      warplist: true
+    },
+    settings: {
+      warp: {
+        max: 3
+      }
     }
   }
 }

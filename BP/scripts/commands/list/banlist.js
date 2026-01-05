@@ -12,7 +12,7 @@ const commandInformation = {
 }
 
 if(config.commands.allowCommands.banlist) {
-  registerCommand(commandInformation, (origin, target, reason) => {
+  registerCommand(commandInformation, (origin) => {
     const bannedPlayers = db.fetch("essentialcc:bannedPlayers", true)
     logReply(origin.sourceEntity, `§eBanned Players: ${bannedPlayers.map(p => p.name).join(", ")}`)
   })
