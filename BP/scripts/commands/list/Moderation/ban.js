@@ -1,8 +1,8 @@
-import { registerCommand } from "../CommandRegistry"  
+import { registerCommand } from "../../CommandRegistry.js"  
 import { world, system } from "@minecraft/server"
-import * as db from "../../utilities/DatabaseHandler.js"
-import { logReply } from "../../utilities/LogReply.js"
-import { config } from "../../config.js"
+import * as db from "../../../utilities/DatabaseHandler.js"
+import { logReply } from "../../../utilities/LogReply.js"
+import { config } from "../../../config.js"
 
 const commandInformation = {
   name: "ban",

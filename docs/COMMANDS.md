@@ -12,6 +12,7 @@ These commands are meant to be use by anyone with or without the permission leve
 |warplist             |                       |                        |List all warps available.                                              |
 |warp                 |                       |\<warp\>                |Teleport to the location of the specified warp                         |
 |suicide              |                       |                        |Cause yourself to die instantly                                        |
+|tps                  |                       |                        |Check your the server's tick per seconds                               |
 
 ## Operator/Admin Commands
 These commands are meant to be use by operators and cannot be accessible by non-operators.
@@ -27,3 +28,4 @@ These commands are meant to be use by operators and cannot be accessible by non-
 |mute                      |                       |\<player\> [reason] [duration]   |Mute a player from chatting in the game.                               |
 |unmute                    |                       |\<player\>                       |Unmute the player from sending chats in the game.                      |
 |realname                  |                       |\<nickname\>                     |Show the real gamertag of the specified nickname.                      |
+|tempban                   |                       |\<player\> \<duration\> [reason] |Temporarily ban a player from the server.                              |

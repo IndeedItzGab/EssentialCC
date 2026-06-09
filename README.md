@@ -16,8 +16,8 @@ A powerful utility script for Minecraft: Bedrock Edition by providing more tweak
 Please ensure your code follows our coding standard and includes tests where possible.
 
 ## Copyright
-© 2025 IndeedItzGab. All rights reserved.
-- You may not distribute this project without explicit permission and proper credit.
+© 2025-2026 IndeedItzGab. All rights reserved unless otherwise explicitly stated.
+- You can distribute this project with the **official download link only**, and proper credit.
 - You may modify this project for **personal use only**.
 
 ## Social

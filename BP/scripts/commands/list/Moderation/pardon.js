@@ -1,7 +1,7 @@
-import { registerCommand } from "../CommandRegistry"  
-import * as db from "../../utilities/DatabaseHandler.js"
-import { logReply } from "../../utilities/LogReply.js"
-import { config } from "../../config.js"
+import { registerCommand } from "../../CommandRegistry.js"  
+import * as db from "../../../utilities/DatabaseHandler.js"
+import { logReply } from "../../../utilities/LogReply.js"
+import { config } from "../../../config.js"
 
 const commandInformation = {
   name: "pardon",

@@ -1,7 +1,8 @@
-import { registerCommand } from "../CommandRegistry.js"  
-import * as db from "../../utilities/DatabaseHandler.js"
-import { logReply } from "../../utilities/LogReply.js"
-import { config } from "../../config.js"
+import { registerCommand } from "../../CommandRegistry.js"  
+import * as db from "../../../utilities/DatabaseHandler.js"
+import { logReply } from "../../../utilities/LogReply.js"
+import { config } from "../../../config.js"
+import { world } from "@minecraft/server"
 
 const commandInformation = {
   name: "unlockdimension",
@@ -10,8 +11,8 @@ const commandInformation = {
   aliases: [],
   usage: [
     {
-      name: "essentialcc:dimension",
-      type: "Enum",
+      name: "dimension",
+      type: "String",
       optional: false
     }
   ]
@@ -21,7 +22,8 @@ if(config.commands.allowCommands.unlockdimension) {
   registerCommand(commandInformation, (origin, target) => {
     const executor = origin?.sourceEntity
     let lockedDimensions = db.fetch("essentialcc:lockedDimensions", true)
-    if(!["minecraft:nether", "minecraft:the_end"].includes(target)) return logReply(executor, `§c${target} dimension doesn't exists`)
+    const dimension = world.getDimension(target)
+    if(!dimension) return logReply(executor, `§c${target} dimension doesn't exists`)
 
     if(!lockedDimensions.some(d => d.dimension === target)) return logReply(executor, `§cThis dimension was not locked`)
     lockedDimensions = lockedDimensions.filter(d => d.dimension !== target)

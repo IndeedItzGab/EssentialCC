@@ -1,7 +1,7 @@
-import { registerCommand } from "../CommandRegistry"  
+import { registerCommand } from "../../CommandRegistry.js"  
 import { world, system } from "@minecraft/server"
-import * as db from "../../utilities/DatabaseHandler.js"
-import { config } from "../../config.js"
+import * as db from "../../../utilities/DatabaseHandler.js"
+import { config } from "../../../config.js"
 
 const commandInformation = {
   name: "home",
@@ -10,12 +10,21 @@ const commandInformation = {
   usage: []
 }
 
+let cooldowns = new Map()
 if(config.commands.allowCommands.home) {
   registerCommand(commandInformation, (origin) => {
     const executor = origin?.sourceEntity
+    const setting = db.fetch("essentialcc:setting")
 
     // Return if the command was not a player
     if(executor?.typeId !== "minecraft:player") return console.log("You should be a player to run this command.")
+
+    const cooldown = cooldowns.get(player.id)
+      if(cooldown?.tick >= system.currentTick) {
+        return player.sendMessage(`$cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
+      } else {
+        cooldowns.set(player.id, {tick: system.currentTick + config.commands.cooldown*20})
+      }
 
     const home = db.fetch("essentialcc:homes", true).find(h => h.player === executor.name)
     if(db.fetch("essentialcc:combatData", true).find(d => d.name === executor.name)?.time >= system.currentTick) return executor.sendMessage("§cYou can't use this command while in combat with other player.")

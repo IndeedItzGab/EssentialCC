@@ -1,16 +1,14 @@
 name: EssentialCC
-version: V1.0.1
+version: V1.0.2
 status: STABLE
 message: |
-  # EssentialCC V1.0.1
-  - Added more slash commands:
-    - `/warp`
-    - `/delwarp`
-    - `/setwarp`
-    - `/warplist`
-    - `/kickall`
-    - `/mute`
-    - `/realname`
-    - `/unmute`
-    - `/suicide`
-  - Fixed an issue with movement detector during teleportation
+  # EssentialCC V1.0.2
+  - Added support for custom dimension on **/lockdimension** and **/unlockdimension**.
+  - Added lock duration on dimension locking.
+  - Fixed locked dimension forcing players to teleport to the highest vertical location in the overworld.
+  - Added new slash commands:
+    - **/tps** - Check the server's tps performance.
+    - **tempban <player> <duration> [reason]** - Temporarily ban a player from the server.
+  - Added commands cooldown
+  - Revamped mute duration for date and time accuracy. 
+  - Updated copyright license

@@ -5,11 +5,12 @@ export const config = {
     allowCommands: {
       ban: true,
       banlist: true,
+      tempban: true,
       pardon: true,
       lockdimension: true,
       unlockdimension: true,
       nickname: true,
-      sethome: false,
+      sethome: true,
       home: true,
       mute: true,
       unmute: true,
@@ -19,7 +20,8 @@ export const config = {
       setwarp: true,
       warp: true,
       delwarp: true,
-      warplist: true
+      warplist: true,
+      tps: true
     },
     settings: {
       warp: {

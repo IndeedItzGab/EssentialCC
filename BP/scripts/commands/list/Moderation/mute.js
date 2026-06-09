@@ -1,8 +1,9 @@
-import { registerCommand } from "../CommandRegistry"  
+import { registerCommand } from "../../CommandRegistry.js"  
 import { world, system } from "@minecraft/server"
-import * as db from "../../utilities/DatabaseHandler.js"
-import { logReply } from "../../utilities/LogReply.js"
-import { config } from "../../config.js"
+import * as db from "../../../utilities/DatabaseHandler.js"
+import { logReply } from "../../../utilities/LogReply.js"
+import { config } from "../../../config.js"
+import { ParseDuration } from "../../../utilities/ParseDuration.js"
 
 const commandInformation = {
   name: "mute",
@@ -34,33 +35,22 @@ if(config.commands.allowCommands.mute) {
     if(target.length === 0) return logReply(executor, "§cCould not find that player")
     
     let mutedPlayers = db.fetch("essentialcc:mutedPlayers", true);
+
+    if(duration) {
+      var parsedDuration = ParseDuration(duration)
+      if(isNaN(parsedDuration)) {
+        return logReply(executor, parsedDuration)
+      }
+    }
   
     // For @a
     let players = []
     for(const p of target) {
       const player = world.getPlayers().find(player => player.id === p.id)
-      let parsedDuration;
       players.push(player)
 
-      if(mutedPlayers.some(p => p.name == player.name)) return executor.sendMessage("real");
-      // Duration parser
-      if(duration.endsWith('s')) {
-        // Seconds
-        parsedDuration = system.currentTick + (parseInt(duration.replaceAll("s", '')) * 20)
-        if(parsedDuration < system.currentTick + (60*20)) return logReply(executor, "§cDuration must be at least a minute.")
-      } else if(duration.endsWith('m')) {
-        // Minutes
-        parsedDuration = system.currentTick + (parseInt(duration.replaceAll("s", '')) * 60 * 20)
-      } else if(duration.endsWith('h')) {
-        // Hours
-        parsedDuration = system.currentTick + (parseInt(duration.replaceAll("s", '')) * 60 * 60* 20)
-      } else if(duration.endsWith('d')) {
-        // Days
-        parsedDuration = system.currentTick + (parseInt(duration.replaceAll("s", '')) * 60 * 60 * 24 * 20)
-      } else if(duration) {
-        return logReply(executor, "§cDuration parameter must be 60s, 1m, 1h, or 1d in example.")
-      }
       player.sendMessage("§cYou have been muted by an Operator")
+      mutedPlayers = mutedPlayers.filter(p => p.name !== player.name) // Overriding thing
       mutedPlayers.push({name: player.name, reason: reason, duration: parsedDuration})
     }
 

@@ -1,0 +1,15 @@
+
+- New parsing duration system (mute, dimension) (DONE) (TESTED)
+- CHange dimenion locking/unlocking things  to support custom dimensions
+- add duration on dimension locking/unlocking 
+- Fixed locked dimension forcing players to teleport to the highest vertical location in the overworld.
+- `/tps`
+- `/tempban`
+- Add commands' cooldowns
+- Updated copyright license
+
+- Add Thumbnail
+
+
+- Implement in-game configuration
+- Ranking system

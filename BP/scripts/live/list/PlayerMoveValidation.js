@@ -3,6 +3,8 @@ import { world, system } from "@minecraft/server"
 let tempCache = new Map()
 export function process() {
   for(const player of world.getPlayers()) {
+    if(!player.id) continue; // Avoid processing simulated players (non actual players) from gametest
+    
     if(!player.hasTag("essentialcc:isTp")) {
       tempCache.delete(player.id);
       continue;

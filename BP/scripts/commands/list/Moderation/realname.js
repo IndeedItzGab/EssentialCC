@@ -1,7 +1,7 @@
-import { registerCommand } from "../CommandRegistry"  
+import { registerCommand } from "../../CommandRegistry.js"  
 import { world } from "@minecraft/server"
-import { logReply } from "../../utilities/LogReply.js"
-import { config } from "../../config.js"
+import { logReply } from "../../../utilities/LogReply.js"
+import { config } from "../../../config.js"
 
 const commandInformation = {
   name: "realname",
