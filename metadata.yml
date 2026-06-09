@@ -8,7 +8,7 @@ message: |
   - Fixed locked dimension forcing players to teleport to the highest vertical location in the overworld.
   - Added new slash commands:
     - **/tps** - Check the server's tps performance.
-    - **tempban <player> <duration> [reason]** - Temporarily ban a player from the server.
+    - **/tempban** - Temporarily ban a player from the server.
   - Added commands cooldown
   - Revamped mute duration for date and time accuracy. 
   - Updated copyright license
