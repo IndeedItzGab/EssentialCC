@@ -102,6 +102,7 @@ jobs:
           JSON=$(jq -nc --arg content "$FULL_MESSAGE
           
           ### Download Section
+           - <:linkvertise:1514208079502118942> [Linkvertise](<https://link-target.net/1073400/EipkK9JCNFan>) (to support me!)
            - <:Github:1393587335979073698> [Github](<${{ steps.create_release.outputs.html_url }}>)
            - <:CurseForge:1377993483800940584> [CurseForge](<https://www.curseforge.com/minecraft-bedrock/scripts/essentialcc/files/$CF_FILE_ID>)
           <@&1456559523715223725>

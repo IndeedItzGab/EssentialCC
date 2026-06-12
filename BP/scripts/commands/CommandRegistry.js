@@ -53,7 +53,80 @@ export function registerCommand(comInfo, callback) {
 
 
 system.beforeEvents.startup.subscribe((init) => {
-  init.customCommandRegistry.registerEnum(`essentialcc:dimension`, ["minecraft:nether", "minecraft:the_end"])
+  init.customCommandRegistry.registerEnum(`essentialcc:rankMode`, ["set", "remove" ])
+  init.customCommandRegistry.registerEnum(`essentialcc:rankSelection`, [
+    "owner",
+    "co_owner",
+    "head_admin",
+    "admin",
+    "trial_admin",
+    "staff_manager",
+    "head_moderator",
+    "moderator",
+    "trial_moderator",
+    "assistant",
+    "head_helper",
+    "helper",
+    "trial_helper",
+    "recruiter",
+
+    "netherite",
+    "diamond",
+    "gold",
+    "quartz",
+    "iron",
+    "copper",
+    "stone",
+    "coal",
+    "wood",
+
+    "god",
+    "king",
+    "queen",
+    "emperor",
+    "councilor",
+    "hero",
+    "knight",
+    "builder",
+    "farmer",
+    "inmate",
+    "merchant",
+    "mayor",
+    "senior",
+    "soldier",
+    "veteran",
+    "artist",
+    "elder",
+    "junior",
+    "expert",
+    "peasant",
+    "master",
+    "new",
+    "newbie",
+    "member",
+    "youtuber",
+    "warden",
+
+    "mvp",
+    "vip",
+    "platinum",
+    "premium",
+    "champion",
+    "elite",
+    "legend",
+    "myth",
+    "epic",
+    "experienced",
+    "advanced",
+
+    "founder",
+    "co_founder",
+    "supporter",
+    "contributor",
+    "donor",
+    "guest",
+    "sponsor"
+  ])
 
   for(const command of commands) {
     init.customCommandRegistry.registerCommand(command.commandInformation, command.callback)

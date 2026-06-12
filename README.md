@@ -9,6 +9,13 @@ A powerful utility script for Minecraft: Bedrock Edition by providing more tweak
 - [Commands List](https://github.com/IndeedItzGab/EssentialCC/blob/main/docs/COMMANDS.md#available-commands)
 - [Installation Guide](https://github.com/IndeedItzGab/EssentialCC/blob/main/docs/INSTALLATION.md#installation)
 
+## Features
+This scripts add 20+ useful [custom slash commands](https://github.com/IndeedItzGab/EssentialCC/blob/main/docs/COMMANDS.md#available-commands) to your game!
+- Ranking/Role System
+
+![rank_example](docs/images/rank_example.png)
+
+
 ## Contributions
 - **Reporting Bugs** - If you encounter any bugs while using EssentialCC, please open an [issue](https://github.com/IndeedItzGab/EssentialCC/issues/new) in our github repository. Ensure to include a detailed description of the issue and steps to reproduce it.
 - **Submitting a Pull Request** -We appreciate code contribution for this project. Especially if you have fixed a bug or implemented a new feature, you may submit a pull request.

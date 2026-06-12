@@ -1,22 +1,9 @@
-// import "./list/ban.js"
-// import "./list/pardon.js"
-// import "./list/lockdimension.js"
-// import "./list/unlockdimension.js"
-// import "./list/banlist.js"
-// import "./list/sethome.js"
-// import "./list/home.js"
-// import "./list/nickname.js"
-// import './list/mute.js'
-// import "./list/unmute.js"
-// import "./list/kickall.js"
-// import "./list/realname.js"
-// import "./list/suicide.js"
-// import "./list/warp.js"
-// import "./list/setwarp.js"
 
 // Underdevelopment
-// import "./list/delwarp.js"
-// import "./list/warplist.js"
+import "./list/Moderation/rank.js"
+import "./list/Moderation/burn.js"
+
+// Default
 import "./list/Default/tps.js"
 import "./list/Default/delwarp.js"
 import "./list/Default/warplist.js"

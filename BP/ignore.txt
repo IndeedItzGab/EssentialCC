@@ -7,9 +7,12 @@
 - `/tempban`
 - Add commands' cooldowns
 - Updated copyright license
-
 - Add Thumbnail
 
+- Added rank/role system with BedrockTeams support
+- Added new custom slash commands:
+  - **/burn <player> <seconds>** (NOT DONE)
+  - **/rank <set|remove> <player> [rank]**
+- New projects icon
 
 - Implement in-game configuration
-- Ranking system

@@ -1,14 +1,10 @@
 name: EssentialCC
-version: V1.0.2
+version: V1.0.3
 status: STABLE
 message: |
-  # EssentialCC V1.0.2
-  - Added support for custom dimension on **/lockdimension** and **/unlockdimension**.
-  - Added lock duration on dimension locking.
-  - Fixed locked dimension forcing players to teleport to the highest vertical location in the overworld.
-  - Added new slash commands:
-    - **/tps** - Check the servers tps performance.
-    - **/tempban** - Temporarily ban a player from the server.
-  - Added commands cooldown
-  - Revamped mute duration for date and time accuracy. 
-  - Updated copyright license
+  # EssentialCC V1.0.3
+  - Added rank/role system with BedrockTeams support
+  - Added new custom slash commands:
+    - **/burn <player> <seconds>**
+    - **/rank <set|remove> <player> [rank]**
+  - New projects icon

@@ -1,7 +1,7 @@
 export const config = {
   commands: {
     namespace: "essentialcc",
-    cooldown: 30, // Per second (NOT IMPLEMENTED)
+    cooldown: 30,
     allowCommands: {
       ban: true,
       banlist: true,
@@ -21,7 +21,9 @@ export const config = {
       warp: true,
       delwarp: true,
       warplist: true,
-      tps: true
+      tps: true,
+      rank: true,
+      burn: true
     },
     settings: {
       warp: {
