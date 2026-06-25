@@ -17,7 +17,7 @@ const commandInformation = {
   ]
 }
 
-if(config.commands.allowCommands.unmute) {
+if(config.overridePackSetting ? config.commands.allowCommands.unmute : world.getPackSettings()["essentialcc:unmute"]) {
   registerCommand(commandInformation, (origin, target) => {
     const executor = origin?.sourceEntity
     let mutedPlayers = db.fetch("essentialcc:mutedPlayers", true);

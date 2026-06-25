@@ -1,4 +1,9 @@
 export const config = {
+  // ! NOTE: If you are going to configure the pack through this file, then you must set overridePackSetting to "true".
+  // ! Otherwise, the script will ignore these changes you made from this file.
+  // ! On the other hand, if you were going to configure this pack through "Pack Setting" or the gear icon you see in-game right-bottom of the pack. Then, you must set overridePackSetting to false to apply changes from that setting.
+  overridePackSetting: false, 
+
   commands: {
     namespace: "essentialcc",
     cooldown: 30,

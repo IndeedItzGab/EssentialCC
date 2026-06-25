@@ -5,13 +5,14 @@ import { config } from "../../../config.js"
 
 const commandInformation = {
   name: "home",
-  description: "Teleport to the location of your home",
+  description: "Teleport to the location of your home.",
   aliases: [],
   usage: []
 }
 
-let cooldowns = new Map()
-if(config.commands.allowCommands.home) {
+
+if(config.overridePackSetting ? config.commands.allowCommands.home : world.getPackSettings()["essentialcc:home"]) {
+  const cooldowns = new Map()
   registerCommand(commandInformation, (origin) => {
     const executor = origin?.sourceEntity
     const setting = db.fetch("essentialcc:setting")
@@ -19,11 +20,11 @@ if(config.commands.allowCommands.home) {
     // Return if the command was not a player
     if(executor?.typeId !== "minecraft:player") return console.log("You should be a player to run this command.")
 
-    const cooldown = cooldowns.get(player.id)
+    const cooldown = cooldowns.get(executor.id)
       if(cooldown?.tick >= system.currentTick) {
-        return player.sendMessage(`$cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
+        return executor.sendMessage(`§cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
       } else {
-        cooldowns.set(player.id, {tick: system.currentTick + config.commands.cooldown*20})
+        cooldowns.set(executor.id, {tick: system.currentTick + (config.overridePackSetting ? config.commands.cooldown : world.getPackSettings()["essentialcc:commands_cooldown"])*20})
       }
 
     const home = db.fetch("essentialcc:homes", true).find(h => h.player === executor.name)

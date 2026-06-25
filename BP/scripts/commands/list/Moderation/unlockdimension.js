@@ -18,7 +18,7 @@ const commandInformation = {
   ]
 }
 
-if(config.commands.allowCommands.unlockdimension) {
+if(config.overridePackSetting ? config.commands.allowCommands.unlockdimension :  world.getPackSettings()["essentialcc:unlockdimension"]) {
   registerCommand(commandInformation, (origin, target) => {
     const executor = origin?.sourceEntity
     let lockedDimensions = db.fetch("essentialcc:lockedDimensions", true)

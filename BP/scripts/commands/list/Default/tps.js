@@ -5,7 +5,7 @@ import { config } from "../../../config.js"
 
 const commandInformation = {
   name: "tps",
-  description: "Check your the server's tick per seconds",
+  description: "Check your the server's tick per seconds.",
   aliases: [],
   usage: []
 }
@@ -43,17 +43,18 @@ function getTPS(seconds) {
 }
 
 
-let cooldowns = new Map()
-if(config.commands.allowCommands.tps) {
+
+if(config.overridePackSetting ? config.commands.allowCommands.tps : world.getPackSettings()["essentialcc:tps"]) {
+  const cooldowns = new Map()
   registerCommand(commandInformation, (origin) => {
     const executor = origin?.sourceEntity
     const setting = db.fetch("essentialcc:setting")
 
     const cooldown = cooldowns.get(executor.id)
     if(cooldown?.tick >= system.currentTick) {
-      return executor.sendMessage(`$cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
+      return executor.sendMessage(`§cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
     } else {
-      cooldowns.set(executor.id, {tick: system.currentTick + config.commands.cooldown*20})
+      cooldowns.set(executor.id, {tick: system.currentTick + (config.overridePackSetting ? config.commands.cooldown : world.getPackSettings()["essentialcc:commands_cooldown"])*20})
     }
 
     const elapsedSeconds = (Date.now() - tickStart) / 1000;

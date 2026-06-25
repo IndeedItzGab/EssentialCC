@@ -103,7 +103,6 @@ export class RankHandler {
 
       const rankTag = player.getTags().find(tag => tag.includes("essentialcc_prefix:"));
       if(rankTag) {
-        console.info(rankTag)
         player.removeTag(rankTag)
       }
       player.chatNamePrefix = undefined;
@@ -114,10 +113,15 @@ export class RankHandler {
   static update(playerId) {
     const player = world.getPlayers().find(player => player.id === playerId);
     if(!player) return;
-    console.info('update')
 
     const rankTag = player.getTags().find(tag => tag.includes("essentialcc_prefix:"))?.split(":")[1];
     const teamTag = player.getTags().find(tag => tag.includes("bedrockteams_prefix:"))?.split(":")[1];
+
+    if(rankTag) {
+      player.chatNamePrefix = `§l${rankTag} §r`;
+    } else {
+      player.chatNamePrefix = undefined;
+    }
 
     if(rankTag && teamTag) {
       player.nameTag = `§l§i[ ${rankTag} §i]\n${teamTag} ${player.name}`

@@ -23,7 +23,7 @@ const commandInformation = {
   ]
 }
 
-if(config.commands.allowCommands.ban) {
+if(config.overridePackSetting ? config.commands.allowCommands.ban : world.getPackSettings()["essentialcc:ban"]) {
   registerCommand(commandInformation, (origin, target, reason) => {
     const executor = origin?.sourceEntity
     if(target.length === 0) return logReply(executor, "§cCould not find that player")

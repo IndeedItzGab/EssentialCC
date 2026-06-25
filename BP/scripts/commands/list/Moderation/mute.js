@@ -29,7 +29,7 @@ const commandInformation = {
   ]
 }
 
-if(config.commands.allowCommands.mute) {
+if(config.overridePackSetting ? config.commands.allowCommands.mute : world.getPackSettings()["essentialcc:mute"]) {
   registerCommand(commandInformation, (origin, target, reason, duration) => {
     const executor = origin?.sourceEntity
     if(target.length === 0) return logReply(executor, "§cCould not find that player")

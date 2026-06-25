@@ -16,7 +16,7 @@ const commandInformation = {
   ]
 }
 
-if(config.commands.allowCommands.realname) {
+if(config.overridePackSetting ? config.commands.allowCommands.realname : world.getPackSettings()["essentialcc:realname"]) {
   registerCommand(commandInformation, (origin, nickname) => {
     const executor = origin?.sourceEntity
     let players = []

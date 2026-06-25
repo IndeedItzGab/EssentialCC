@@ -2,6 +2,7 @@ import { registerCommand } from "../../CommandRegistry.js"
 import * as db from "../../../utilities/DatabaseHandler.js"
 import { logReply } from "../../../utilities/LogReply.js"
 import { config } from "../../../config.js"
+import { world } from "@minecraft/server"
 
 const commandInformation = {
   name: "pardon",
@@ -17,7 +18,7 @@ const commandInformation = {
   ]
 }
 
-if(config.commands.allowCommands.pardon) {
+if(config.overridePackSetting ? config.commands.allowCommands.pardon : world.getPackSettings()["essentialcc:pardon"]) {
   registerCommand(commandInformation, (origin, target) => {
     const executor = origin?.sourceEntity
     let bannedPlayers = db.fetch("essentialcc:bannedPlayers", true);

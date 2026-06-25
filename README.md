@@ -2,6 +2,11 @@
 [![DONATE](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/GabrielBondoc09)
 [![TWITTER](https://img.shields.io/twitter/follow/IndeedItzGab)](https://x.com/IndeedItzGab?t=UL3bhR8CksHJSWn89duhuA&s=09)
 [![DISCORD](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/23vG3Np6AH)
+[![CURSEFORGE](https://img.shields.io/curseforge/dt/1418769?logo=Curseforge&label=CurseForge)](https://www.curseforge.com/minecraft-bedrock/scripts/essentialcc)
+[![GITHUB_DOWNLOADS](https://img.shields.io/github/downloads/IndeeditzGab/essentialcc/total?logo=github&label=Github%20Downloads)](https://github.com/IndeedItzGab/EssentialCC/releases)
+[![CURSEFORGE_DOWNLOAD](https://img.shields.io/curseforge/v/1418769?logoColor=CurseForge&label=Download)](https://www.curseforge.com/minecraft-bedrock/scripts/essentialcc/files/latest)
+[![CURRENT_VERSION](https://img.shields.io/github/v/release/IndeediTzgab/EssentialCC?label=Current%20Version)](https://github.com/IndeedItzGab/EssentialCC/releases/latest)
+![SUPPORTED_VERSIONS](https://img.shields.io/curseforge/game-versions/1418769?label=Support%20Versions)
 
 A powerful utility script for Minecraft: Bedrock Edition by providing more tweaks and commands in your game.
 

@@ -1,18 +1,29 @@
+New Update
+- Implementation of Pack Setting that provide better configuration for client world and realm users.
+- Fixed several bugs that cause non-operator commands to not work (reported by [@hellnahyotweakin](https://github.com/hellnahyotweakin))
 
-- New parsing duration system (mute, dimension) (DONE) (TESTED)
-- CHange dimenion locking/unlocking things  to support custom dimensions
-- add duration on dimension locking/unlocking 
-- Fixed locked dimension forcing players to teleport to the highest vertical location in the overworld.
-- `/tps`
-- `/tempban`
-- Add commands' cooldowns
-- Updated copyright license
-- Add Thumbnail
 
-- Added rank/role system with BedrockTeams support
-- Added new custom slash commands:
-  - **/burn <player> <seconds>** (NOT DONE)
-  - **/rank <set|remove> <player> [rank]**
-- New projects icon
 
-- Implement in-game configuration
+
+- /delwarp (DONE)
+- /home (DONE)
+- /sethome (DONE)
+- /setwarp (DONE)
+- /suicide (DONE)
+- /tps (DONE)
+- /warp (DONE)
+- /warplist (DONE)
+
+- /ban (DONE)
+- /banlist (DONE)
+- /burn (DONE)
+- /kickall (DONE)
+- /lockdimension (DONE)
+- /mute (DONE)
+- /nickname (DONE)
+- /pardon (DONE)
+- /rank (DONE)
+- /realname (DONE)
+- /tempban (DONE)
+- /unlockdimension (DONE)
+- /unmute (DONE)

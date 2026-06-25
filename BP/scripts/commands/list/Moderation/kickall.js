@@ -22,7 +22,7 @@ const commandInformation = {
   ]
 }
 
-if(config.commands.allowCommands.kickall) {
+if(config.overridePackSetting ? config.commands.allowCommands.kickall : world.getPackSettings()["essentialcc:kickall"]) {
   registerCommand(commandInformation, (origin, reason, includeOperators) => {
     const executor = origin?.sourceEntity
     for(const player of world.getPlayers()) {

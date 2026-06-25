@@ -29,7 +29,7 @@ const commandInformation = {
   ]
 }
 
-if(config.commands.allowCommands.tempban) {
+if(config.overridePackSetting ? config.commands.allowCommands.tempban : world.getPackSettings()["essentialcc:tempban"]) {
   registerCommand(commandInformation, (origin, target, duration, reason) => {
     const executor = origin?.sourceEntity
     if(target.length === 0) return logReply(executor, "§cCould not find that player")

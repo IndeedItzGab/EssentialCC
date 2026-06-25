@@ -6,7 +6,7 @@ import { ranks, RankHandler } from "../../../utilities/RankHandler.js"
 
 const commandInformation = {
   name: "rank",
-  description: "Manage the ranks in this world",
+  description: "Manage the ranks in this world.",
   permissionLevel: 1,
   aliases: [],
   usage: [
@@ -29,7 +29,7 @@ const commandInformation = {
   ]
 }
 
-if(config.commands.allowCommands.rank) {
+if(config.overridePackSetting ? config.commands.allowCommands.rank : world.getPackSettings()["essentialcc:rank"]) {
   registerCommand(commandInformation, (origin, mode, target, selection) => {
     const executor = origin?.sourceEntity
     if(target.length === 0) return logReply(executor, "§cCould not find that player")

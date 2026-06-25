@@ -5,7 +5,7 @@ import { config } from "../../../config.js"
 
 const commandInformation = {
   name: "nickname",
-  description: "Set a new nickname to a specifc player(s)",
+  description: "Set a new nickname to a specifc player(s).",
   permissionLevel: 1,
   aliases: ["nick"],
   usage: [
@@ -22,7 +22,7 @@ const commandInformation = {
   ]
 }
 
-if(config.commands.allowCommands.nickname) {
+if(config.overridePackSetting ? config.commands.allowCommands.nickname : world.getPackSettings()["essentialcc:nickname"]) {
   registerCommand(commandInformation, (origin, target, nickname) => {
     const executor = origin?.sourceEntity
     if(target.length === 0) return logReply(executor, "§cCould not find that player")

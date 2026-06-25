@@ -5,7 +5,7 @@ import { config } from "../../../config.js"
 
 const commandInformation = {
   name: "burn",
-  description: "Set a player on fire in a seconds",
+  description: "Set a player on fire in a seconds.",
   permissionLevel: 1,
   aliases: [],
   usage: [
@@ -22,7 +22,7 @@ const commandInformation = {
   ]
 }
 
-if(config.commands.allowCommands.burn) {
+if(config.overridePackSetting ? config.commands.allowCommands.burn : world.getPackSettings()["essentialcc:burn"]) {
   registerCommand(commandInformation, (origin, target, seconds) => {
     const executor = origin?.sourceEntity
     if(target.length === 0) return logReply(executor, "§cCould not find that player")

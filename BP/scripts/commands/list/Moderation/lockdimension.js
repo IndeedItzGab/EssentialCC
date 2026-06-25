@@ -25,9 +25,8 @@ const commandInformation = {
 }
 
 // Next Update: Duration
-if(config.commands.allowCommands.lockdimension) {
+if(config.overridePackSetting ? config.commands.allowCommands.lockdimension : world.getPackSettings()["essentialcc:lockdimension"]) {
   registerCommand(commandInformation, (origin, target, duration) => {
-
     const executor = origin?.sourceEntity
     const lockedDimensions = db.fetch("essentialcc:lockedDimensions", true)
     const dimension = world.getDimension(target)

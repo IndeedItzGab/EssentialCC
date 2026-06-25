@@ -1,18 +1,18 @@
 {
-  "format_version": 2,
+  "format_version": 3,
   "header": {
-    "name": "EssentialCC §r(§a1.0.3§r)",
+    "name": "EssentialCC §r(§a1.0.4§r)",
     "description": "§aA powerful utility script for Minecraft: Bedrock Edition by providing more tweaks and commands in your game.",
     "uuid": "1268638c-267b-4e39-b652-e7a75c59ab29",
-    "min_engine_version": [1, 21, 120],
-    "version": [1, 0, 3]
+    "min_engine_version": "1.21.130",
+    "version": "1.0.4"
   },
   "modules": [
     {
       "description": "Behavior Pack Module",
       "type": "data",
       "uuid": "12f8c23c-c359-43ce-b74b-0784839ebfb9",
-      "version": [1, 0, 0]
+      "version": "1.0.0"
     },
     {
       "description": "scripts",
@@ -20,7 +20,161 @@
       "language": "javascript",
       "entry": "scripts/index.js",
       "uuid": "f146d820-5a60-4a10-a1aa-8f779cd5c162",
-      "version": [1, 0, 0]
+      "version": "1.0.0"
+    }
+  ],
+  "settings": [
+    {
+      "type": "label",
+      "text": "§lEssentialCC§r\n§6NOTE: Changing these settings requires you to restart the world to apply the changes."
+    },
+    {
+      "type": "slider",
+      "text": "Commands Cooldown\n§iThis is used by non-operator commands to cooldown the usage",
+      "name": "essentialcc:commands_cooldown",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "slider",
+      "text": "Max Warps\n§iThe maximum warps that a player can have",
+      "name": "essentialcc:max_warps",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "label",
+      "text": "§lAllow commands§r\n§iEnable or disable commands through these togglable setting to maximize your preference."
+    },
+    {
+      "type": "toggle",
+      "text": "/warp §i[Usable by Members]\n§iTeleport to the location of the specified warp.",
+      "name": "essentialcc:warp",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/warplist §i[Usable by Members]\n§iList all warps available.",
+      "name": "essentialcc:warplist",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/setwarp §i[Usable by Members]\nSet a warp location with your current location.",
+      "name": "essentialcc:setwarp",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/delwarp §i[Usable by Members]\nDelete the specified warp.",
+      "name": "essentialcc:delwarp",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/home §i[Usable by Members]\nTeleport to the location of your home.",
+      "name": "essentialcc:home",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/sethome §i[Usable by Members]\nSet your own home location.",
+      "name": "essentialcc:sethome",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/suicide §i[Usable by Members]\nCause yourself to die instantly.",
+      "name": "essentialcc:suicide",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/tps §i[Usable by Members]\nCheck your the server's tick per seconds.",
+      "name": "essentialcc:tps",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/ban §i[Only for Operators]\nPermanently ban a player from the server.",
+      "name": "essentialcc:ban",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/tempban §i[Only for Operators]\nTemporarily ban a player from the server.",
+      "name": "essentialcc:tempban",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/banlist §i[Only for Operators]\nList all the names of banned players.",
+      "name": "essentialcc:banlist",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/burn §i[Only for Operators]\nSet a player on fire in a seconds.",
+      "name": "essentialcc:burn",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/kickall §i[Only for Operators]\nKick all players within the game except the issuer.",
+      "name": "essentialcc:kickall",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/lockdimension §i[Only for Operators]\nLock a dimension to prevent players teleporting in this dimension.",
+      "name": "essentialcc:lockdimension",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/unlockdimension §i[Only for Operators]\nUnlock a dimension to let players teleport to this dimension.",
+      "name": "essentialcc:unlockdimension",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/mute §i[Only for Operators]\nMute a player from chatting in the game.",
+      "name": "essentialcc:mute",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/unmute §i[Only for Operators]\nUnmute the player from sending chats in the game.",
+      "name": "essentialcc:unmute",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/nickname §i[Only for Operators]\nSet a new nickname to a specifc player(s)",
+      "name": "essentialcc:nickname",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/realname §i[Only for Operators]\nShow the real gamertag of the specified nickname.",
+      "name": "essentialcc:realname",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/pardon §i[Only for Operators]\nPardon a player that was banned from the server.",
+      "name": "essentialcc:pardon",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/rank §i[Only for Operators]\nManage the ranks in this world.",
+      "name": "essentialcc:rank",
+      "default": true
     }
   ],
   "dependencies": [
@@ -30,7 +184,7 @@
     }
   ],
   "metadata": {
-    "author": ["IndeedItzGab"],
+    "authors": ["IndeedItzGab"],
     "url": "https://github.com/IndeedItzGab/EssentialCC",
     "license": "All Rights Reserved unless otherwise explicitly stated."
   }

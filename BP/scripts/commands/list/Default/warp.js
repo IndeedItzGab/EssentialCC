@@ -5,7 +5,7 @@ import { config } from "../../../config.js"
 
 const commandInformation = {
   name: "warp",
-  description: "Teleport to the location of the specified warp",
+  description: "Teleport to the location of the specified warp.",
   aliases: [],
   usage: [
     {
@@ -16,8 +16,9 @@ const commandInformation = {
   ]
 }
 
-let cooldowns = new Map()
-if(config.commands.allowCommands.warp) {
+
+if(config.overridePackSetting ? config.commands.allowCommands.warp : world.getPackSettings()["essentialcc:warp"]) {
+  const cooldowns = new Map()
   registerCommand(commandInformation, (origin, name) => {
     const executor = origin?.sourceEntity
     const setting = db.fetch("essentialcc:setting")
@@ -26,11 +27,11 @@ if(config.commands.allowCommands.warp) {
     if(executor?.typeId !== "minecraft:player") return console.log("You should be a player to run this command.")
       
     // Cooldowns
-    const cooldown = cooldowns.get(player.id)
+    const cooldown = cooldowns.get(executor.id)
     if(cooldown?.tick >= system.currentTick) {
-      return player.sendMessage(`$cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
+      return executor.sendMessage(`§cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
     } else {
-      cooldowns.set(player.id, {tick: system.currentTick + config.commands.cooldown*20})
+      cooldowns.set(executor.id, {tick: system.currentTick + (config.overridePackSetting ? config.commands.cooldown : world.getPackSettings()["essentialcc:commands_cooldown"])*20})
     }
 
     const warp = db.fetch("essentialcc:warps", true).find(w => (w.player === executor.id && w.name === name))
