@@ -39,8 +39,8 @@ jobs:
         run: |
           FILE_NAME="${{ vars.PROJECT_NAME }}-${{ inputs.version }} (${{ inputs.status }}).mcpack"
           echo "FILE_NAME=$FILE_NAME" >> $GITHUB_ENV
-          cd src
-          zip -r ../"$FILE_NAME" .
+          zip -r temp.zip BP/*
+          mv temp.zip "$FILE_NAME"
 
       - name: Read changelog
         id: changelog
