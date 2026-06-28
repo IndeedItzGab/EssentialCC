@@ -1,8 +1,8 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import * as db from "../../../utilities/DatabaseHandler.js"
-import { logReply } from "../../../utilities/LogReply.js"
-import { config } from "../../../config.js"
-import { world } from "@minecraft/server"
+import { world, CustomCommandStatus } from "@minecraft/server"
+import registerCommand from "../../CommandRegistry.js"  
+import Database from "../../../utilities/DatabaseHandler.js"
+import config from "../../../config.js"
+
 
 const commandInformation = {
   name: "banlist",
@@ -14,7 +14,10 @@ const commandInformation = {
 
 if(config.overridePackSetting ? config.commands.allowCommands.banlist : world.getPackSettings()["essentialcc:banlist"]) {
   registerCommand(commandInformation, (origin) => {
-    const bannedPlayers = db.fetch("essentialcc:bannedPlayers", true)
-    logReply(origin.sourceEntity, `§eBanned Players: ${bannedPlayers.map(p => p.name).join(", ")}`)
+    const bannedPlayers = Database.fetch("essentialcc:bannedPlayers", true)
+    return {
+      status: CustomCommandStatus.Success,
+      message: `§eBanned Players: ${bannedPlayers.map(p => p.name).join(", ")}`
+    }
   })
 }

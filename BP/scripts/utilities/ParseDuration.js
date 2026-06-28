@@ -1,4 +1,4 @@
-export function ParseDuration(duration) {
+export default function ParseDuration(duration) {
   if(!duration) return;
   if(duration.endsWith('s')) {
     // Seconds

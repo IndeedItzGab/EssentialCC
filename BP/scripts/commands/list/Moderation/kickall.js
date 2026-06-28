@@ -1,7 +1,6 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import { world, system } from "@minecraft/server"
-import { logReply } from "../../../utilities/LogReply.js"
-import { config } from "../../../config.js"
+import registerCommand from "../../CommandRegistry.js"  
+import { world, system, CustomCommandStatus } from "@minecraft/server"
+import config from "../../../config.js"
 
 const commandInformation = {
   name: "kickall",
@@ -23,13 +22,15 @@ const commandInformation = {
 }
 
 if(config.overridePackSetting ? config.commands.allowCommands.kickall : world.getPackSettings()["essentialcc:kickall"]) {
-  registerCommand(commandInformation, (origin, reason, includeOperators) => {
-    const executor = origin?.sourceEntity
+  registerCommand(commandInformation, (origin, reason = "No reason provided.", includeOperators) => {
     for(const player of world.getPlayers()) {
-      if((!includeOperators && player.playerPermissionLevel === 2) || player.id === executor?.id) continue;
-      system.run(() => player.runCommand(`kick @s ${reason ? reason : 'No reason was given'}`))
+      if((!includeOperators && player.playerPermissionLevel === 2) || player.id === origin?.sourceEntity?.id) continue;
+      system.run(() => player.runCommand(`kick @s ${reason}`))
     }
 
-    logReply(executor, "§eYou have kicked all players in the world")
+    return {
+      status: CustomCommandStatus.Success,
+      message: "You have kicked all players in the world"
+    }
   })
 }

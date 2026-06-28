@@ -1,11 +1,11 @@
 {
   "format_version": 3,
   "header": {
-    "name": "EssentialCC §r(§a1.0.4§r)",
+    "name": "EssentialCC §r(§a1.0.5§r)",
     "description": "§aA powerful utility script for Minecraft: Bedrock Edition by providing more tweaks and commands in your game.",
     "uuid": "1268638c-267b-4e39-b652-e7a75c59ab29",
     "min_engine_version": "1.21.130",
-    "version": "1.0.4"
+    "version": "1.0.5"
   },
   "modules": [
     {
@@ -35,7 +35,7 @@
       "min": 0,
       "max": 60,
       "step": 1,
-      "default": 30
+      "default": 15
     },
     {
       "type": "slider",
@@ -174,6 +174,24 @@
       "type": "toggle",
       "text": "/rank §i[Only for Operators]\nManage the ranks in this world.",
       "name": "essentialcc:rank",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/freeze §i[Only for Operators]\nFreeze a player making them unable to move and look around.",
+      "name": "essentialcc:freeze",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/tempfreeze §i[Only for Operators]\nTemporarily freeze a player making them unable to move and look around.",
+      "name": "essentialcc:tempfreeze",
+      "default": true
+    },
+    {
+      "type": "toggle",
+      "text": "/unfreeze §i[Only for Operators]\nUnfreeze the player from being unable to move or turn around.",
+      "name": "essentialcc:unfreeze",
       "default": true
     }
   ],

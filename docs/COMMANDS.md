@@ -29,5 +29,8 @@ These commands are meant to be use by operators and cannot be accessible by non-
 |unmute                    |                       |\<player\>                       |Unmute the player from sending chats in the game.                      |
 |realname                  |                       |\<nickname\>                     |Show the real gamertag of the specified nickname.                      |
 |tempban                   |                       |\<player\> \<duration\> [reason] |Temporarily ban a player from the server.                              |
-|rank                      |                       |\<set\|remove\> \<player\> [rank]|Manage the ranks in the server                                         |
-|burn                      |                       |\<player\> \<seconds\>           |Set a player on fire in a seconds                                      |
+|rank                      |                       |\<set\|remove\> \<player\> [rank]|Manage the ranks in the server.                                        |
+|burn                      |                       |\<player\> \<seconds\>           |Set a player on fire in a seconds.                                     |
+|freeze                    |                       |\<player\> [reason]              |Freeze a player making them unable to move and look around.            |
+|tempfreeze                |                       |\<player\> \<duration\> [reason] |Temporarily freeze a player making them unable to move and look around.|
+|unfreeze                  |                       |\<player\>                       |Unfreeze the player from being unable to move or turn around.          |

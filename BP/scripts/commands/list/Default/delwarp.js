@@ -1,7 +1,7 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import * as db from "../../../utilities/DatabaseHandler.js"
-import { config } from "../../../config.js"
-import { system, world } from "@minecraft/server" 
+import registerCommand from "../../CommandRegistry.js"  
+import Database from "../../../utilities/DatabaseHandler.js"
+import config from "../../../config.js"
+import { system, world, CustomCommandResult } from "@minecraft/server" 
 
 const commandInformation = {
   name: "delwarp",
@@ -19,26 +19,29 @@ const commandInformation = {
 if(config.overridePackSetting ? config.commands.allowCommands.delwarp : world.getPackSettings()["essentialcc:delwarp"]) {
   const cooldowns = new Map()
   registerCommand(commandInformation, (origin, name) => {
-    const executor = origin?.sourceEntity
-    const setting = db.fetch("essentialcc:setting")
+    const player = origin?.sourceEntity
+    const setting = Database.fetch("essentialcc:setting")
 
     // Return if the command was not a player
-    if(executor?.typeId !== "minecraft:player") return console.log("You should be a player to run this command.")
+    if(player?.typeId !== "minecraft:player") 
+      return {
+        status: CustomCommandResult.Failure,
+        message: "You should be a player to run this command."
+      }
     
     // Cooldown
-    const cooldown = cooldowns.get(executor.id)
+    const cooldown = cooldowns.get(player.id)
     if(cooldown?.tick >= system.currentTick) {
-      return executor.sendMessage(`§cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
+      return player.sendMessage(`§cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
     } else {
-      cooldowns.set(executor.id, {tick: system.currentTick + (config.overridePackSetting ? config.commands.cooldown : world.getPackSettings()["essentialcc:commands_cooldown"])*20})
+      cooldowns.set(player.id, {tick: system.currentTick + (config.overridePackSetting ? config.commands.cooldown : world.getPackSettings()["essentialcc:commands_cooldown"])*20})
     }
 
-    let warps = db.fetch("essentialcc:warps", true)
-    if(!warps.some(d => d.player === executor.id && d.name === name)) return executor.sendMessage(`§cThat warp does not exist!`)
-      
-    warps = warps.filter(d => !(d.player === executor.id && d.name === name))
-
-    db.store("essentialcc:warps", warps)
-    executor.sendMessage(`§aYou just deleted "${name}" warp`)
+    const warps = Database.fetch("essentialcc:warps", true)
+    if(!warps.some(d => d.player === player.id && d.name === name))
+      return player.sendMessage(`§cThat warp does not exist!`)
+    
+    Database.store("essentialcc:warps", warps.filter(d => !(d.player === player.id && d.name === name)))
+    player.sendMessage(`§aYou just deleted "${name}" warp`)
   })
 }

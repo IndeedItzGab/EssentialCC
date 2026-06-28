@@ -1,7 +1,7 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import { world, system } from "@minecraft/server"
-import * as db from "../../../utilities/DatabaseHandler.js"
-import { config } from "../../../config.js"
+import registerCommand from "../../CommandRegistry.js"  
+import { world, system, CustomCommandStatus } from "@minecraft/server"
+import Database from "../../../utilities/DatabaseHandler.js"
+import config from "../../../config.js"
 
 const commandInformation = {
   name: "tps",
@@ -42,20 +42,21 @@ function getTPS(seconds) {
     return Math.min(20, tickDiff / timeDiff).toFixed(2);
 }
 
-
-
 if(config.overridePackSetting ? config.commands.allowCommands.tps : world.getPackSettings()["essentialcc:tps"]) {
   const cooldowns = new Map()
   registerCommand(commandInformation, (origin) => {
-    const executor = origin?.sourceEntity
-    const setting = db.fetch("essentialcc:setting")
+    const player = origin?.sourceEntity
+    const setting = Database.fetch("essentialcc:setting")
 
-    const cooldown = cooldowns.get(executor.id)
-    if(cooldown?.tick >= system.currentTick) {
-      return executor.sendMessage(`§cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
-    } else {
-      cooldowns.set(executor.id, {tick: system.currentTick + (config.overridePackSetting ? config.commands.cooldown : world.getPackSettings()["essentialcc:commands_cooldown"])*20})
+    if(player) {
+      const cooldown = cooldowns.get(player?.id)
+      if(cooldown?.tick >= system.currentTick) {
+        return player.sendMessage(`§cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
+      } else {
+        cooldowns.set(player.id, {tick: system.currentTick + (config.overridePackSetting ? config.commands.cooldown : world.getPackSettings()["essentialcc:commands_cooldown"])*20})
+      }
     }
+  
 
     const elapsedSeconds = (Date.now() - tickStart) / 1000;
     const tick5s = getTPS(5)
@@ -64,8 +65,11 @@ if(config.overridePackSetting ? config.commands.allowCommands.tps : world.getPac
     const tick5m = getTPS(300)
     const tick10m = getTPS(600)
 
-    executor.sendMessage(`§7TPS from last 5s, 10s, 1m, 5m, 10m,
+    return {
+      status: CustomCommandStatus.Success,
+      message: `§7TPS from last 5s, 10s, 1m, 5m, 10m,
 §a${tick5s}§7, §a${tick10s}§7, §a${tick60s}§7, §a${tick5m}§7, §a${tick10m}
-§7Average TPS: §a${Math.min(20, (ticks / elapsedSeconds).toFixed(2))}`)
+§7Average TPS: §a${Math.min(20, (ticks / elapsedSeconds).toFixed(2))}`
+    }
   })
 }

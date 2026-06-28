@@ -1,12 +1,12 @@
 import { world, system } from "@minecraft/server"
-import * as db from "../../utilities/DatabaseHandler.js"
+import Database from "../../utilities/DatabaseHandler.js"
 
 
 //! Currently it used system's tick which is not a good idea for handling these types of feature.
 //! Therefore, we will soon use the literal date time from the actual machine
 
 world.beforeEvents.chatSend.subscribe(event => {
-  let mutedPlayers = db.fetch("essentialcc:mutedPlayers", true);
+  let mutedPlayers = Database.fetch("essentialcc:mutedPlayers", true);
   const muteData = mutedPlayers.find(d => d.name === event.sender.name)
   if(muteData) {
     if(muteData?.duration > Date.now()) {
@@ -24,7 +24,7 @@ world.beforeEvents.chatSend.subscribe(event => {
       event.cancel = true;
     } else {
       // A handler for players if the system tick already exceed player's mute duration
-      db.store("essentialcc:mutedPlayers", mutedPlayers.filter(d => d.name !== event.sender.name))
+      Database.store("essentialcc:mutedPlayers", mutedPlayers.filter(d => d.name !== event.sender.name))
     }
   }
 })

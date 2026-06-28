@@ -1,6 +1,8 @@
 import { system } from "@minecraft/server"
-import * as PlayerMoveValidation from "./list/PlayerMoveValidation.js"
+import PlayerMoveValidation from "./list/PlayerMoveValidation"
+import FreezedDurationHandler from "./list/FreezedDurationHandler"
 
 system.runInterval(() => {
-  PlayerMoveValidation.process();
-}, 1*20)
+  PlayerMoveValidation()
+  FreezedDurationHandler()
+}, 1*5)

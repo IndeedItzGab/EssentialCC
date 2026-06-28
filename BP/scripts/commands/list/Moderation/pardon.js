@@ -1,8 +1,7 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import * as db from "../../../utilities/DatabaseHandler.js"
-import { logReply } from "../../../utilities/LogReply.js"
-import { config } from "../../../config.js"
-import { world } from "@minecraft/server"
+import registerCommand from "../../CommandRegistry.js"  
+import Database from "../../../utilities/DatabaseHandler.js"
+import config from "../../../config.js"
+import { world, CustomCommandStatus } from "@minecraft/server"
 
 const commandInformation = {
   name: "pardon",
@@ -20,15 +19,19 @@ const commandInformation = {
 
 if(config.overridePackSetting ? config.commands.allowCommands.pardon : world.getPackSettings()["essentialcc:pardon"]) {
   registerCommand(commandInformation, (origin, target) => {
-    const executor = origin?.sourceEntity
-    let bannedPlayers = db.fetch("essentialcc:bannedPlayers", true);
+    let bannedPlayers = Database.fetch("essentialcc:bannedPlayers", true);
 
     if(bannedPlayers.some(p => p.name === target)) {
-      bannedPlayers = bannedPlayers.filter(p => p.name !== target)
-      db.store("essentialcc:bannedPlayers", bannedPlayers)
-      logReply(executor, `§eYou have pardoned ${target} from the server`)
+      Database.store("essentialcc:bannedPlayers", bannedPlayers.filter(p => p.name !== target))
+      return {
+        status: CustomCommandStatus.Success,
+        message: `You have pardoned ${target} from the server`
+      }
     } else {
-      logReply(executor, `§cThat player was not banned from the server`)
+      return {
+        status: CustomCommandStatus.Failure,
+        message: "That player was not banned from the server"
+      }
     }
 })
 }

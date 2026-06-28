@@ -1,9 +1,8 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import { world, system } from "@minecraft/server"
-import * as db from "../../../utilities/DatabaseHandler.js"
-import { logReply } from "../../../utilities/LogReply.js"
-import { config } from "../../../config.js"
-import { ParseDuration } from "../../../utilities/ParseDuration.js"
+import registerCommand from "../../CommandRegistry.js"  
+import { world, system, CustomCommandStatus } from "@minecraft/server"
+import Database from "../../../utilities/DatabaseHandler.js"
+import config from "../../../config.js"
+import ParseDuration from "../../../utilities/ParseDuration.js"
 
 const commandInformation = {
   name: "mute",
@@ -30,17 +29,23 @@ const commandInformation = {
 }
 
 if(config.overridePackSetting ? config.commands.allowCommands.mute : world.getPackSettings()["essentialcc:mute"]) {
-  registerCommand(commandInformation, (origin, target, reason, duration) => {
-    const executor = origin?.sourceEntity
-    if(target.length === 0) return logReply(executor, "§cCould not find that player")
+  registerCommand(commandInformation, (origin, target, reason = "No reason provided.", duration) => {
+
+    if(target.length === 0)
+      return {
+        status: CustomCommandStatus.Failure,
+        message: "Could not find that player"
+      }
     
-    let mutedPlayers = db.fetch("essentialcc:mutedPlayers", true);
+    let mutedPlayers = Database.fetch("essentialcc:mutedPlayers", true);
 
     if(duration) {
       var parsedDuration = ParseDuration(duration)
-      if(isNaN(parsedDuration)) {
-        return logReply(executor, parsedDuration)
-      }
+      if(isNaN(parsedDuration))
+        return {
+          status: CustomCommandStatus.Failure,
+          message: parsedDuration
+        } 
     }
   
     // For @a
@@ -55,9 +60,13 @@ if(config.overridePackSetting ? config.commands.allowCommands.mute : world.getPa
     }
 
 
-    db.store("essentialcc:mutedPlayers", mutedPlayers)
+    Database.store("essentialcc:mutedPlayers", mutedPlayers)
 
-    const finalizeReason = reason ? `: ${reason}` : '';
-    players.length > 1 ? logReply(executor, "Muted everyone from the game" + finalizeReason) : logReply(executor, `Muted ${players[0].name} from the game` + finalizeReason);
+    return {
+      status: CustomCommandStatus.Success,
+      message: players.length > 1
+        ? `Muted everyone from the game: ${reason}`
+        : `Muted ${players[0].name} from the game: ${reason}`
+    }
   })
 }

@@ -1,8 +1,7 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import { world } from "@minecraft/server"
-import * as db from "../../../utilities/DatabaseHandler.js"
-import { logReply } from "../../../utilities/LogReply.js"
-import { config } from "../../../config.js"
+import registerCommand from "../../CommandRegistry.js"  
+import { world, CustomCommandStatus} from "@minecraft/server"
+import Database from "../../../utilities/DatabaseHandler.js"
+import config from "../../../config.js"
 
 const commandInformation = {
   name: "unmute",
@@ -19,16 +18,21 @@ const commandInformation = {
 
 if(config.overridePackSetting ? config.commands.allowCommands.unmute : world.getPackSettings()["essentialcc:unmute"]) {
   registerCommand(commandInformation, (origin, target) => {
-    const executor = origin?.sourceEntity
-    let mutedPlayers = db.fetch("essentialcc:mutedPlayers", true);
+    let mutedPlayers = Database.fetch("essentialcc:mutedPlayers", true);
 
     if(mutedPlayers.some(p => p.name === target)) {
       mutedPlayers = mutedPlayers.filter(p => p.name !== target)
-      db.store("essentialcc:mutedPlayers", mutedPlayers)
+      Database.store("essentialcc:mutedPlayers", mutedPlayers)
       world.getPlayers().find(p => p.name === target).sendMessage(`§eYou have been unmuted by an Operator`)
-      logReply(executor, `§eYou have unmuted ${target} from the server`)
+      return {
+        status: CustomCommandStatus.Success,
+        message: `You have unmuted ${target} from the server`
+      }
     } else {
-      logReply(executor, `§cThat player was not muted from the server`)
+      return {
+        status: CustomCommandStatus.Failure,
+        message: "That player was not muted from the server"
+      }
     }
-})
+  })
 }

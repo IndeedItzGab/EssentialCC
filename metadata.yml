@@ -1,7 +1,0 @@
-name: EssentialCC
-version: V1.0.4
-status: STABLE
-message: |
-  # EssentialCC V1.0.4
-  - Implementation of Pack Setting that provide better configuration for client world and realm users.
-  - Fixed several bugs that cause non-operator commands to not work (reported by [@hellnahyotweakin](https://github.com/hellnahyotweakin))

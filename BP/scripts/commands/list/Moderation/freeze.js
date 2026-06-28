@@ -1,11 +1,11 @@
-import { world, system, CustomCommandStatus } from "@minecraft/server"
+import { world, system, CustomCommandStatus, InputPermissionCategory } from "@minecraft/server"
 import Database from "../../../utilities/DatabaseHandler.js"
 import config from "../../../config.js"
 import registerCommand from "../../CommandRegistry.js"  
 
 const commandInformation = {
-  name: "ban",
-  description: "Permanently ban a player from the server.",
+  name: "freeze",
+  description: "Freeze a player making them unable to move and look around",
   permissionLevel: 1,
   aliases: [],
   usage: [
@@ -22,7 +22,7 @@ const commandInformation = {
   ]
 }
 
-if(config.overridePackSetting ? config.commands.allowCommands.ban : world.getPackSettings()["essentialcc:ban"]) {
+if(config.overridePackSetting ? config.commands.allowCommands.freeze : world.getPackSettings()["essentialcc:freeze"]) {
   registerCommand(commandInformation, (origin, target, reason = "No reason provided.") => {
     if(target.length === 0)
       return {
@@ -30,26 +30,29 @@ if(config.overridePackSetting ? config.commands.allowCommands.ban : world.getPac
         message: "Could not find that player"
       }
     
-    const bannedPlayers = Database.fetch("essentialcc:bannedPlayers", true);
+    const freezePlayers = Database.fetch("essentialcc:freezePlayers", true);
 
     // For @a
     let players = []
     for(const p of target) {
       const player = world.getPlayers().find(player => player.id === p.id)
-      system.run(() => player.runCommand(`kick @s ${reason}`))
+      system.run(() => {
+        player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, false)
+        player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, false)
+      })
       players.push(player)
 
-      if(!bannedPlayers.some(p => p.name == player.name)) {
-        bannedPlayers.push({name: player.name, reason: reason})
+      if(!freezePlayers.some(p => p.name == player.name)) {
+        freezePlayers.push({name: player.name, reason: reason})
       }
     }
 
-    Database.store("essentialcc:bannedPlayers", bannedPlayers)
+    Database.store("essentialcc:freezePlayers", freezePlayers)
     return {
       status: CustomCommandStatus.Success,
       message: players.length > 1
-        ? `Banned everyone from the game: ${reason}`
-        : `Banned ${players[0].name} from the game: ${reason}`
+        ? `Freezed everyone in the world: ${reason}`
+        : `Freezed ${players[0].name} in the world: ${reason}`
     }
   })
 }

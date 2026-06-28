@@ -1,7 +1,7 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import { world, system } from "@minecraft/server"
-import * as db from "../../../utilities/DatabaseHandler.js"
-import { config } from "../../../config.js"
+import registerCommand from "../../CommandRegistry.js"  
+import { world, system, CustomCommandStatus } from "@minecraft/server"
+import Database from "../../../utilities/DatabaseHandler.js"
+import config from "../../../config.js"
 
 const commandInformation = {
   name: "home",
@@ -14,31 +14,39 @@ const commandInformation = {
 if(config.overridePackSetting ? config.commands.allowCommands.home : world.getPackSettings()["essentialcc:home"]) {
   const cooldowns = new Map()
   registerCommand(commandInformation, (origin) => {
-    const executor = origin?.sourceEntity
-    const setting = db.fetch("essentialcc:setting")
+    const player = origin?.sourceEntity
+    const setting = Database.fetch("essentialcc:setting")
 
     // Return if the command was not a player
-    if(executor?.typeId !== "minecraft:player") return console.log("You should be a player to run this command.")
-
-    const cooldown = cooldowns.get(executor.id)
-      if(cooldown?.tick >= system.currentTick) {
-        return executor.sendMessage(`§cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
-      } else {
-        cooldowns.set(executor.id, {tick: system.currentTick + (config.overridePackSetting ? config.commands.cooldown : world.getPackSettings()["essentialcc:commands_cooldown"])*20})
+    if(player?.typeId !== "minecraft:player")
+      return {
+        status: CustomCommandResult.Failure,
+        message: "You should be a player to run this command."
       }
 
-    const home = db.fetch("essentialcc:homes", true).find(h => h.player === executor.name)
-    if(db.fetch("essentialcc:combatData", true).find(d => d.name === executor.name)?.time >= system.currentTick) return executor.sendMessage("§cYou can't use this command while in combat with other player.")
-    if(!home) return executor.sendMessage("§cYou do not have home location")
+
+    const cooldown = cooldowns.get(player.id)
+      if(cooldown?.tick >= system.currentTick) {
+        return player.sendMessage(`§cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
+      } else {
+        cooldowns.set(player.id, {tick: system.currentTick + (config.overridePackSetting ? config.commands.cooldown : world.getPackSettings()["essentialcc:commands_cooldown"])*20})
+      }
+
+    const home = Database.fetch("essentialcc:homes", true).find(h => h.player === player.name)
+    if(player.getDynamicProperty("hurted") >= Date.now())
+      return player.sendMessage("§cYou can't use this command while in combat with other player.")
+    if(!home)
+      return player.sendMessage("§cYou do not have home location")
     
-    executor.sendMessage(`§eYou will be teleported in 5 seconds, don't move.`)
-    system.run(() => executor.addTag("essentialcc:isTp"))
+    player.sendMessage(`§eYou will be teleported in 5 seconds, don't move.`)
+    player.setDynamicProperty("teleporting", true)
     system.runTimeout(() => {
-      if(!executor.hasTag("essentialcc:isTp")) return;
-      const dimension = world.getDimension(home.dimension)
-      executor.tryTeleport({x: home.location.x, y: home.location.y, z: home.location.z}, {dimension: dimension})
-      executor.sendMessage(`§aYou have been teleported to your home.`)
-      system.run(() => executor.removeTag("essentialcc:isTp"))
+      if(player.getDynamicProperty("teleporting")) {
+        const dimension = world.getDimension(home.dimension)
+        player.tryTeleport({x: home.location.x, y: home.location.y, z: home.location.z}, {dimension: dimension})
+        player.sendMessage(`§aYou have been teleported to your home.`)
+        player.setDynamicProperty("teleporting", false)
+      }
     },5*20)
   })
 }

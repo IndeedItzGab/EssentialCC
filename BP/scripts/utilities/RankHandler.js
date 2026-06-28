@@ -105,7 +105,7 @@ export class RankHandler {
       if(rankTag) {
         player.removeTag(rankTag)
       }
-      player.chatNamePrefix = undefined;
+      player.chatNamePrefix = '';
       this.update(playerId)
     })
   }
@@ -120,7 +120,7 @@ export class RankHandler {
     if(rankTag) {
       player.chatNamePrefix = `§l${rankTag} §r`;
     } else {
-      player.chatNamePrefix = undefined;
+      player.chatNamePrefix = '';
     }
 
     if(rankTag && teamTag) {

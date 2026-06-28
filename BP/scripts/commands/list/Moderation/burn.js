@@ -1,7 +1,6 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import { world, system } from "@minecraft/server"
-import { logReply } from "../../../utilities/LogReply.js"
-import { config } from "../../../config.js"
+import { world, system, CustomCommandStatus } from "@minecraft/server"
+import registerCommand from "../../CommandRegistry.js"  
+import config from "../../../config.js"
 
 const commandInformation = {
   name: "burn",
@@ -24,8 +23,11 @@ const commandInformation = {
 
 if(config.overridePackSetting ? config.commands.allowCommands.burn : world.getPackSettings()["essentialcc:burn"]) {
   registerCommand(commandInformation, (origin, target, seconds) => {
-    const executor = origin?.sourceEntity
-    if(target.length === 0) return logReply(executor, "§cCould not find that player")
+    if(target.length === 0) 
+      return {
+        status: CustomCommandStatus.Failure,
+        message: "Could not find that player"
+      }
 
     // For @a
     let players = []
@@ -36,6 +38,11 @@ if(config.overridePackSetting ? config.commands.allowCommands.burn : world.getPa
       system.run(() => player.setOnFire(seconds))
     }
 
-    players.length > 1 ? logReply(executor, `§eEveryone is now burning!`) : logReply(executor, `§e${players[0].name} is now burning!`)
+    return {
+      status: CustomCommandStatus.Success,
+      message: players.length > 1
+        ?  `Everyone is now burning!`
+        : `${players[0].name} is now burning!`
+    }
   })
 }

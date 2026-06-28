@@ -1,14 +1,9 @@
-import { world, system } from "@minecraft/server"
+import { world } from "@minecraft/server"
 
-let tempCache = new Map()
-export function process() {
-  for(const player of world.getPlayers()) {
+const tempCache = new Map()
+export default function PlayerMoveValidation() {
+  for(const player of world.getPlayers().filter(p => p.getDynamicProperty("teleporting"))) {
     if(!player.id) continue; // Avoid processing simulated players (non actual players) from gametest
-    
-    if(!player.hasTag("essentialcc:isTp")) {
-      tempCache.delete(player.id);
-      continue;
-    };
     
     const cached = tempCache.get(player.id);
     const pos = {
@@ -17,11 +12,10 @@ export function process() {
       z: Math.floor(player.location.z)
     };
 
-    if(cached) {
-      if(cached.x === pos.x && cached.y === pos.y && cached.z === pos.z) continue;
+    if(cached && !(cached.x === pos.x && cached.y === pos.y && cached.z === pos.z)) {
       tempCache.delete(player.id)
       player.sendMessage(`§cYou have moved and the teleportation was cancelled.`)
-      system.run(() => player.removeTag("essentialcc:isTp"));
+      player.setDynamicProperty("teleporting", false)
     } else {
       tempCache.set(player.id, pos)
     }

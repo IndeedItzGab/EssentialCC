@@ -1,14 +1,13 @@
 import { world, system } from "@minecraft/server"
-import * as db from "../../utilities/DatabaseHandler.js"
+import Database from "../../utilities/DatabaseHandler.js"
 
 world.afterEvents.playerSpawn.subscribe((event) => {
   if(!event.initialSpawn) return;
-  const bannedPlayers = db.fetch("essentialcc:bannedPlayers", true);
+  const bannedPlayers = Database.fetch("essentialcc:bannedPlayers", true);
 
   const banData = bannedPlayers.find(p => p.name === event.player.name)
   
   if(banData ) {
-    console.info("Test")
     if(banData?.duration >= Date.now()) {
       // A handler for players that were muted with durations
       const days = Math.floor((banData.duration - Date.now()) / 1000 / 60 / 60 / 24)
@@ -20,7 +19,7 @@ world.afterEvents.playerSpawn.subscribe((event) => {
     } else if(!banData.duration) {
       system.run(() => event.player.runCommand(`kick @s You were banned in this server: ${banData.reason}`))
     } else {
-      db.store("essentialcc:bannedPlayers", bannedPlayers.filter(p => p.name !== event.player.name))
+      Database.store("essentialcc:bannedPlayers", bannedPlayers.filter(p => p.name !== event.player.name))
     }
   }
 })

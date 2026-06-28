@@ -1,7 +1,6 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import { world, system } from "@minecraft/server"
-import { logReply } from "../../../utilities/LogReply.js"
-import { config } from "../../../config.js"
+import registerCommand from "../../CommandRegistry.js"  
+import { world, system, CustomCommandStatus } from "@minecraft/server"
+import config from "../../../config.js"
 import { ranks, RankHandler } from "../../../utilities/RankHandler.js"
 
 const commandInformation = {
@@ -11,7 +10,7 @@ const commandInformation = {
   aliases: [],
   usage: [
     {
-      name: "essentialcc:rankMode",
+      name: `${config.commands.namespace}:rankMode`,
       type: "Enum",
       optional: false,
     },
@@ -21,7 +20,7 @@ const commandInformation = {
       optional: false
     },
     {
-      name: "essentialcc:rankSelection",
+      name: `${config.commands.namespace}:rankSelection`,
       type: "Enum",
       optional: true
     }
@@ -31,10 +30,16 @@ const commandInformation = {
 
 if(config.overridePackSetting ? config.commands.allowCommands.rank : world.getPackSettings()["essentialcc:rank"]) {
   registerCommand(commandInformation, (origin, mode, target, selection) => {
-    const executor = origin?.sourceEntity
-    if(target.length === 0) return logReply(executor, "§cCould not find that player")
-    if(!["set", "remove"].includes(mode)) return (executor, "§cThat enum does not exists")
-
+    if(target.length === 0)
+      return {
+        status: CustomCommandStatus.Failure,
+        message: "Could not find that player"
+      }
+    if(!["set", "remove"].includes(mode))
+      return {
+        status: CustomCommandStatus.Failure,
+        message: "That command does not exist"
+      }
     // For @a
     let players = []
     for(const p of target) {
@@ -42,17 +47,30 @@ if(config.overridePackSetting ? config.commands.allowCommands.rank : world.getPa
       players.push(player)
 
       if(mode === "set") {
-        if(!ranks[selection]) return logReply(executor, "§cThe specified rank is invalid")
+        if(!ranks[selection])
+          return {
+            status: CustomCommandStatus.Failure,
+            message: "The specified rank is invalid"
+          }
         RankHandler.set(player.id, ranks[selection])
       } else if(mode === "remove") {
         RankHandler.remove(player.id)
       }
     }
-
+    
     if(mode === "set") {
-      players.length > 1 ? logReply(executor, `§eYou have successfully set everyone's rank`) : logReply(executor, `§eYou have successfully set ${players[0].name}'s rank`)
+      var res = players.length > 1
+        ? "You have successfully set everyone's rank"
+        : `You have successfully set ${players[0].name}'s rank`
     } else if(mode === "remove") {
-      players.length > 1 ? logReply(executor, `§eYou have successfully removed everyone's rank`) : logReply(executor, `§eYou have successfully removed ${players[0].name}'s rank`)
+      var res =  players.length > 1
+        ? "You have successfully removed everyone's rank"
+        : `You have successfully removed ${players[0].name}'s rank`
+    }
+    
+    return {
+      status: CustomCommandStatus.Success,
+      message: res
     }
   })
 }

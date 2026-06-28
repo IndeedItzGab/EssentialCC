@@ -1,8 +1,7 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import * as db from "../../../utilities/DatabaseHandler.js"
-import { logReply } from "../../../utilities/LogReply.js"
-import { config } from "../../../config.js"
-import { world } from "@minecraft/server"
+import registerCommand from "../../CommandRegistry.js"  
+import Database from "../../../utilities/DatabaseHandler.js"
+import config from "../../../config.js"
+import { world, CustomCommandStatus } from "@minecraft/server"
 
 const commandInformation = {
   name: "unlockdimension",
@@ -20,14 +19,25 @@ const commandInformation = {
 
 if(config.overridePackSetting ? config.commands.allowCommands.unlockdimension :  world.getPackSettings()["essentialcc:unlockdimension"]) {
   registerCommand(commandInformation, (origin, target) => {
-    const executor = origin?.sourceEntity
-    let lockedDimensions = db.fetch("essentialcc:lockedDimensions", true)
+    let lockedDimensions = Database.fetch("essentialcc:lockedDimensions", true)
     const dimension = world.getDimension(target)
-    if(!dimension) return logReply(executor, `§c${target} dimension doesn't exists`)
+    if(!dimension) 
+      return {
+        status: CustomCommandStatus.Failure,
+        message: `${target} dimension doesn't exists`
+      }
+    if(!lockedDimensions.some(d => d.dimension === target))
+      return {
+        status: CustomCommandStatus.Failure,
+        message: `${target} dimension was not locked`
+      }
 
-    if(!lockedDimensions.some(d => d.dimension === target)) return logReply(executor, `§cThis dimension was not locked`)
     lockedDimensions = lockedDimensions.filter(d => d.dimension !== target)
-    db.store("essentialcc:lockedDimensions", lockedDimensions)
-    logReply(executor, `§eYou have succesfully unlocked ${target}`)
+    Database.store("essentialcc:lockedDimensions", lockedDimensions)
+
+    return {
+      status: CustomCommandStatus.Success,
+      message: `You have succesfully unlocked ${target}`
+    }
   })
 }

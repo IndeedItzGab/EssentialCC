@@ -1,10 +1,8 @@
-import {
-  system
-} from "@minecraft/server";
-import { config } from "../config.js"
+import { system } from "@minecraft/server";
+import config  from "../config.js"
 
 let commands = []
-export function registerCommand(comInfo, callback) {
+export default function registerCommand(comInfo, callback) {
     // Parameters Handler
     let optionalParameters = [], mandatoryParameters = []
     comInfo?.usage.forEach(parameter => {
@@ -53,8 +51,8 @@ export function registerCommand(comInfo, callback) {
 
 
 system.beforeEvents.startup.subscribe((init) => {
-  init.customCommandRegistry.registerEnum(`essentialcc:rankMode`, ["set", "remove" ])
-  init.customCommandRegistry.registerEnum(`essentialcc:rankSelection`, [
+  init.customCommandRegistry.registerEnum(`${config.commands.namespace}:rankMode`, ["set", "remove" ])
+  init.customCommandRegistry.registerEnum(`${config.commands.namespace}:rankSelection`, [
     "owner",
     "co_owner",
     "head_admin",

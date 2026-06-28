@@ -1,7 +1,7 @@
-import { registerCommand } from "../../CommandRegistry.js"  
-import * as db from "../../../utilities/DatabaseHandler.js"
-import { config } from "../../../config.js"
-import { system, world } from "@minecraft/server"
+import registerCommand from "../../CommandRegistry.js"  
+import Database from "../../../utilities/DatabaseHandler.js"
+import config from "../../../config.js"
+import { system, world, CustomCommandStatus } from "@minecraft/server"
 
 const commandInformation = {
   name: "setwarp",
@@ -19,37 +19,43 @@ const commandInformation = {
 
 if(config.overridePackSetting ? config.commands.allowCommands.setwarp : world.getPackSettings()["essentialcc:setwarp"]) {
   const cooldowns = new Map()
-  registerCommand(commandInformation, (origin, name) => {
-    const executor = origin?.sourceEntity
-    const setting = db.fetch("essentialcc:setting")
+  registerCommand(commandInformation, (origin, firstArg) => {
+    const player = origin?.sourceEntity
+    const setting = Database.fetch("essentialcc:setting")
 
     // Return if the command was not a player
-    if(executor?.typeId !== "minecraft:player") return console.log("You should be a player to run this command.")
+    if(player?.typeId !== "minecraft:player")
+      return {
+        status: CustomCommandStatus.Failure,
+        message: "You should be a player to run this command."
+      }
 
     // Cooldowns
-    const cooldown = cooldowns.get(executor.id)
+    const cooldown = cooldowns.get(player.id)
     if(cooldown?.tick >= system.currentTick) {
-      return executor.sendMessage(`§cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
+      return player.sendMessage(`§cYou need to wait another ${(cooldown.tick - system.currentTick) / 20} seconds before running that!'`)
     } else {
-      cooldowns.set(executor.id, {tick: system.currentTick + (config.overridePackSetting ? config.commands.cooldown : world.getPackSettings()["essentialcc:commands_cooldown"])*20})
+      cooldowns.set(player.id, {tick: system.currentTick + (config.overridePackSetting ? config.commands.cooldown : world.getPackSettings()["essentialcc:commands_cooldown"])*20})
     }
 
-    let warps = db.fetch("essentialcc:warps", true)
-    if(warps.filter(d => d.player === executor.id).length >= (config.overridePackSetting ? config.commands.settings.warp.max : world.getPackSettings()["essentialcc:max_warps"])) return executor.sendMessage(`§cYou have already reached the maximum warps count!`)
-    if(warps.some(d => (d.player === executor.id && d.name === name))) return executor.sendMessage(`§cThat warp's name already exists!`)
+    const warps = Database.fetch("essentialcc:warps", true)
+    if(warps.filter(d => d.player === player.id).length >= (config.overridePackSetting ? config.commands.settings.warp.max : world.getPackSettings()["essentialcc:max_warps"]))
+      return player.sendMessage(`§cYou have already reached the maximum warps count!`)
+    if(warps.some(d => (d.player === player.id && d.name === firstArg)))
+      return player.sendMessage(`§cThat warp's name already exists!`)
       
     warps.push({
-      name: name,
-      player: executor.id,
-      dimension: executor.dimension.id,
+      name: firstArg,
+      player: player.id,
+      dimension: player.dimension.id,
       location: {
-        x: executor.location.x,
-        y: executor.location.y,
-        z: executor.location.z
+        x: player.location.x,
+        y: player.location.y,
+        z: player.location.z
       }
     })
 
-    db.store("essentialcc:warps", warps)
-    executor.sendMessage(`§aYou have set a warp in your current location.`)
+    Database.store("essentialcc:warps", warps)
+    player.sendMessage(`§aYou have set a warp in your current location.`)
   })
 }

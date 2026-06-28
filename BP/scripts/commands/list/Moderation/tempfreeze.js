@@ -1,12 +1,12 @@
 import registerCommand from "../../CommandRegistry.js"  
-import { world, system, CustomCommandStatus } from "@minecraft/server"
+import { world, system, CustomCommandStatus, InputPermissionCategory } from "@minecraft/server"
 import Database from "../../../utilities/DatabaseHandler.js"
 import config from "../../../config.js"
 import ParseDuration from "../../../utilities/ParseDuration.js"
 
 const commandInformation = {
-  name: "tempban",
-  description: "Temporarily ban a player from the server.",
+  name: "tempfreeze",
+  description: "Temporarily freeze a player making them unable to move and look around",
   permissionLevel: 1,
   aliases: [],
   usage: [
@@ -28,7 +28,7 @@ const commandInformation = {
   ]
 }
 
-if(config.overridePackSetting ? config.commands.allowCommands.tempban : world.getPackSettings()["essentialcc:tempban"]) {
+if(config.overridePackSetting ? config.commands.allowCommands.tempfreeze : world.getPackSettings()["essentialcc:tempfreeze"]) {
   registerCommand(commandInformation, (origin, target, duration, reason = "No reason provided.") => {
     if(target.length === 0)
       return {
@@ -36,7 +36,7 @@ if(config.overridePackSetting ? config.commands.allowCommands.tempban : world.ge
         message: "Could not find that player"
       }
 
-    const bannedPlayers = Database.fetch("essentialcc:bannedPlayers", true);
+    const freezePlayers = Database.fetch("essentialcc:freezePlayers", true);
 
     if(duration) {
       var parsedDuration = ParseDuration(duration)
@@ -51,22 +51,24 @@ if(config.overridePackSetting ? config.commands.allowCommands.tempban : world.ge
     let players = []
     for(const p of target) {
       const player = world.getPlayers().find(player => player.id === p.id)
-      system.run(() => player.runCommand(`kick @s ${reason}`))
+      system.run(() => {
+        player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, false)
+        player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, false)
+      })
       players.push(player)
 
-      if(!bannedPlayers.some(p => p.name == player.name)) {
-        bannedPlayers.push({name: player.name, reason: reason, duration: parsedDuration})
+      if(!freezePlayers.some(p => p.name == player.name)) {
+        freezePlayers.push({name: player.name, reason: reason, duration: parsedDuration})
       };
     }
 
 
-    Database.store("essentialcc:bannedPlayers", bannedPlayers)
-
+    Database.store("essentialcc:freezePlayers", freezePlayers)
     return {
       status: CustomCommandStatus.Success,
       message: players.length > 1
-        ? `Temporarily banned everyone from the game: ${reason}`
-        : `Temporarily banned ${players[0].name} from the game: ${reason}`
+        ? `Temporarily freezed everyone in the game: ${reason}`
+        : `Temporarily freezed ${players[0].name} in the game: ${reason}`
     }
   })
 }
