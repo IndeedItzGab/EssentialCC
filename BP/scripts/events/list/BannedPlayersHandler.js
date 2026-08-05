@@ -1,8 +1,7 @@
 import { world, system } from "@minecraft/server"
 import Database from "../../utilities/DatabaseHandler.js"
 
-world.afterEvents.playerSpawn.subscribe((event) => {
-  if(!event.initialSpawn) return;
+export function BannedPlayersHandler(event) {
   const bannedPlayers = Database.fetch("essentialcc:bannedPlayers", true);
 
   const banData = bannedPlayers.find(p => p.name === event.player.name)
@@ -22,4 +21,4 @@ world.afterEvents.playerSpawn.subscribe((event) => {
       Database.store("essentialcc:bannedPlayers", bannedPlayers.filter(p => p.name !== event.player.name))
     }
   }
-})
+}

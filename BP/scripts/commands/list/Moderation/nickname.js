@@ -35,7 +35,14 @@ if(config.overridePackSetting ? config.commands.allowCommands.nickname : world.g
     for(const p of target) {
       const player = world.getPlayers().find(player => player.id === p.id)
       players.push(player)
-      system.run(() => player.nameTag = nickname);
+      if(nickname) {
+        system.run(() => player.nameTag = nickname);
+        player.setDynamicProperty("nickname", nickname);
+      } else {
+        system.run(() => player.nameTag = player.name);
+        player.setDynamicProperty("nickname", null);
+      }
+      
     }
 
     return {

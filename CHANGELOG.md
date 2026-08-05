@@ -1,10 +1,3 @@
-- Improvement with storing/fetching data that significantly improve the efficiency of the process, and making the code simple and clean.
-  - Improvement with combat and movement detector for features regarding teleportation, such as warps, and home.
-- Add support for console commands and command blocks for **operator commands** including **/tps**
-- Implemented new custom slash commands:
-  - **/freeze <player> [reason]**
-  - **/tempfreeze <player> <duration> [reason]**
-  - **/unfreeze <player>**
-- Fixed some minor issue that can caused unexpected results or bugs.
-- Fixed error where all commands stop working when there is a new command namespace. (Reported by [@TheBlue](<https://discord.com/users/1035013869166407680>))
-- Fixed the prefix name on chat when the user rank was removed after having one. (Reported by [@TheBlue](<https://discord.com/users/1035013869166407680>))
+- Added support for minecraft bedrock 26.40 and above. Compatibality issue was reported by [@TheBlue](https://discord.com/users/1035013869166407680)
+- Added nickname persistent support, and operators can now remove the given nickname of a player.
+- Refactored some codes.

@@ -2,10 +2,7 @@ import { world, system } from "@minecraft/server"
 import Database from "../../utilities/DatabaseHandler.js"
 
 
-//! Currently it used system's tick which is not a good idea for handling these types of feature.
-//! Therefore, we will soon use the literal date time from the actual machine
-
-world.beforeEvents.chatSend.subscribe(event => {
+export function MutedPlayersHandler(event) {
   let mutedPlayers = Database.fetch("essentialcc:mutedPlayers", true);
   const muteData = mutedPlayers.find(d => d.name === event.sender.name)
   if(muteData) {
@@ -27,4 +24,4 @@ world.beforeEvents.chatSend.subscribe(event => {
       Database.store("essentialcc:mutedPlayers", mutedPlayers.filter(d => d.name !== event.sender.name))
     }
   }
-})
+}

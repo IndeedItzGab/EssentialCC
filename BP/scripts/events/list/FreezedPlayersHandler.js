@@ -1,7 +1,7 @@
 import { world, system, InputPermissionCategory } from "@minecraft/server"
 import Database from "../../utilities/DatabaseHandler.js"
 
-world.afterEvents.playerSpawn.subscribe((event) => {
+export function FreezedPlayersHandler(event) {
   const freezePlayers = Database.fetch("essentialcc:freezePlayers", true);
   const freezeData = freezePlayers.find(p => p.name === event.player.name)
   
@@ -29,4 +29,4 @@ world.afterEvents.playerSpawn.subscribe((event) => {
       Database.store("essentialcc:freezePlayers", freezePlayers.filter(p => p.name !== event.player.name))
     }
   }
-})
+}

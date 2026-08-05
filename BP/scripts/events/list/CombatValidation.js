@@ -1,7 +1,7 @@
 import { world, system } from "@minecraft/server"
 import Database from "../../utilities/DatabaseHandler.js"
 
-world.afterEvents.entityHurt.subscribe((event) => {
+export function CombatValidation(event) {
   const suspect = event.damageSource.damagingEntity
   const victim = event.hurtEntity
 
@@ -22,4 +22,4 @@ world.afterEvents.entityHurt.subscribe((event) => {
   } catch (error) {
     console.error(error)
   } 
-})
+}

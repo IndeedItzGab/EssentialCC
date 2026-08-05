@@ -18,7 +18,7 @@ if(config.overridePackSetting ? config.commands.allowCommands.suicide : world.ge
 
     if(player?.typeId !== "minecraft:player")
       return {
-        status: CustomCommandResult.Failure,
+        status: CustomCommandStatus.Failure,
         message: "You should be a player to run this command."
       }
 

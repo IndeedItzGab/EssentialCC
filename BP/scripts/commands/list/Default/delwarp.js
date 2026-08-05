@@ -1,7 +1,7 @@
 import registerCommand from "../../CommandRegistry.js"  
 import Database from "../../../utilities/DatabaseHandler.js"
 import config from "../../../config.js"
-import { system, world, CustomCommandResult } from "@minecraft/server" 
+import { system, world, CustomCommandStatus } from "@minecraft/server" 
 
 const commandInformation = {
   name: "delwarp",
@@ -25,7 +25,7 @@ if(config.overridePackSetting ? config.commands.allowCommands.delwarp : world.ge
     // Return if the command was not a player
     if(player?.typeId !== "minecraft:player") 
       return {
-        status: CustomCommandResult.Failure,
+        status: CustomCommandStatus.Failure,
         message: "You should be a player to run this command."
       }
     

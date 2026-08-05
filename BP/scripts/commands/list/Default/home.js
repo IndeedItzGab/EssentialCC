@@ -20,7 +20,7 @@ if(config.overridePackSetting ? config.commands.allowCommands.home : world.getPa
     // Return if the command was not a player
     if(player?.typeId !== "minecraft:player")
       return {
-        status: CustomCommandResult.Failure,
+        status: CustomCommandStatus.Failure,
         message: "You should be a player to run this command."
       }
 
