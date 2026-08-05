@@ -1,6 +1,6 @@
 import { world, system } from "@minecraft/server";
 
-export function NicknameHandler(event) {
+export default (event) => {
   system.run(() => {
     const nickname = event.player.getDynamicProperty("nickname");
     if (nickname) {

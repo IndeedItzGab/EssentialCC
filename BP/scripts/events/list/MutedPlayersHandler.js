@@ -2,7 +2,7 @@ import { world, system } from "@minecraft/server"
 import Database from "../../utilities/DatabaseHandler.js"
 
 
-export function MutedPlayersHandler(event) {
+export default (event) => {
   let mutedPlayers = Database.fetch("essentialcc:mutedPlayers", true);
   const muteData = mutedPlayers.find(d => d.name === event.sender.name)
   if(muteData) {

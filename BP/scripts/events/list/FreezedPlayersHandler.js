@@ -1,7 +1,7 @@
 import { world, system, InputPermissionCategory } from "@minecraft/server"
 import Database from "../../utilities/DatabaseHandler.js"
 
-export function FreezedPlayersHandler(event) {
+export default (event) => {
   const freezePlayers = Database.fetch("essentialcc:freezePlayers", true);
   const freezeData = freezePlayers.find(p => p.name === event.player.name)
   

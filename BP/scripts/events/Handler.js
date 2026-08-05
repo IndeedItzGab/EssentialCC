@@ -1,12 +1,12 @@
 import { world } from "@minecraft/server"
 
-import "./list/BannedPlayersHandler.js"
-import "./list/PlayerSwitchedDimension.js"
-import "./list/CombatValidation.js"
-import "./list/MutedPlayersHandler.js"
-import "./list/PlayerRankHandler.js"
-import "./list/FreezedPlayersHandler.js"
-import "./list/NicknameHandler.js"
+import BannedPlayersHandler from "./list/BannedPlayersHandler.js"
+import PlayerSwitchedDimension from "./list/PlayerSwitchedDimension.js"
+import CombatValidation from "./list/CombatValidation.js"
+import MutedPlayersHandler from "./list/MutedPlayersHandler.js"
+import PlayerRankhandler from "./list/PlayerRankHandler.js"
+import FreezedPlayersHandler from "./list/FreezedPlayersHandler.js"
+import NicknameHandler from "./list/NicknameHandler.js"
 
 
 world.afterEvents.playerSpawn.subscribe((event) => {

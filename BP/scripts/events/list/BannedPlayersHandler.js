@@ -1,7 +1,7 @@
 import { world, system } from "@minecraft/server"
 import Database from "../../utilities/DatabaseHandler.js"
 
-export function BannedPlayersHandler(event) {
+export default (event) => {
   const bannedPlayers = Database.fetch("essentialcc:bannedPlayers", true);
 
   const banData = bannedPlayers.find(p => p.name === event.player.name)

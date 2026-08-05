@@ -1,7 +1,7 @@
 import { world, system } from "@minecraft/server"
 import Database from "../../utilities/DatabaseHandler.js"
 
-export function CombatValidation(event) {
+export default (event) => {
   const suspect = event.damageSource.damagingEntity
   const victim = event.hurtEntity
 

@@ -1,3 +1,9 @@
-- Added support for minecraft bedrock 26.40 and above. Compatibality issue was reported by [@TheBlue](https://discord.com/users/1035013869166407680)
-- Added nickname persistent support, and operators can now remove the given nickname of a player.
-- Refactored some codes.
+- Fixed major issues regarding events:
+  - PLayers that got banned were able to join.
+  - Combat detection cannot cancel teleportation.
+  - Freezed players were able to move after rejoining.
+  - Muted players can chat.
+  - Persistent nickname were not handled properly.
+  - Players can enter to a locked dimensions without durations.
+  - Rank were not handled properly.
+- Starting from this update, we will start using major number in version per major updates (e.g. 1."5".0).
